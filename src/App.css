@@ -1,38 +1,306 @@
-.App {
-  text-align: center;
+/* CSS */
+body {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  background-color: #2a2d2e; /* Set the background color for the entire screen */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-container {
+  display: flex;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 200px;
+  height: 100vh; /* Set the height of the navbar to 100% of the viewport height */
+  background-color: rgb(135, 186, 228); /* Blue background for the navbar only */
+  padding: 20px;
+}
+
+.nav-item {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-bottom: 5px; /* Small gap between navbar items */
+  background-color: transparent;
+  color: #fff;
+  font-weight: bold;
+}
+
+.nav-item:hover {
+  background-color: #fff;
+  color: rgb(121, 150, 197);
+}
+
+.content-display {
+  flex: 1;
+  padding: 20px;
+}
+
+
+
+
+.graph-container {
+  position: fixed;
+  border: 1px solid #e8e2e2;
+  background-color: #d7d1d1;
+}
+
+.vehicle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Additional styles for better visualization */
+.vehicle.Towards {
+  background-color: green;
+}
+
+.vehicle.Backwards {
+  background-color: red;
+}
+
+.vehicle.Upwards {
+  background-color: blue;
+}
+
+.vehicle.Downwards {
+  background-color: yellow;
+}
+
+
+
+
+
+
+.box {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  font-weight: bold;
+}
+
+.vehicle {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+
+
+
+
+
+
+/* CSS for AddScenario component */
+.AddScenario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.AddScenario h2 {
+  margin-bottom: 25px;
+  color: #ccc;
+}
+
+.AddScenario label {
+  display: inline-block;
+  width: 80px;
+  margin-left: 10px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.AddScenario input {
+  margin-bottom: 35px;
+  align-items: center;
+  color: rgb(38, 37, 37);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* CSS for placing Name, Id, and Time side by side */
+.AddScenario .input-container {
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+/* Add green color for the scenario */
+.AddScenario button {
+  background-color: green;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  margin-left: 425px;
+  
+
+}
+
+.AddScenario button:hover {
+  background-color: darkgreen;
+  align-items: center;
+}
+
+/* Additional CSS to place elements side by side */
+.AddScenario .input-container > div {
+  margin-right: 25px;
+}
+
+
+/* allScenario.css */
+
+/* Style for the container */
+.AllScenario {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+}
+
+/* Style for the button container */
+.AllScenario .button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Style for the Add Scenario, Add Vehicle, and Delete All buttons */
+.AllScenario button {
+  padding: 8px 16px;
+  background-color: #a5d192;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-bottom: 25px;
+  margin-right: 100px;
+}
+
+/* Style for the table-like layout */
+.AllScenario .table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style for table headers */
+.AllScenario .table th {
+  background-color: #6f7675;
+  padding: 10px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style for table rows */
+.AllScenario .table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Style for alternating row colors */
+.AllScenario .table tr:nth-child(even) {
+  background-color: #e49d9d;
+}
+
+/* Style for the Edit and Delete buttons */
+.AllScenario .table td button {
+  padding: 4px 8px;
+  background-color: ghostwhite;
+  color: #161515;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style for the Edit button */
+.AllScenario .table td button.edit {
+  margin-right: 5px;
+  background-color: #edf7ee;
+}
+
+/* Style for the Delete button */
+.AllScenario .table td button.delete {
+  background-color: #dc3545;
+}
+
+/* Hover effect for buttons */
+.AllScenario .table button:hover {
+  background-color: #42d249;
+}
+
+
+
+/* AddVehicle.css */
+
+/* Reset default margin and padding for all elements */
+.AddVehicle {
+  display: flex;
+  flex-direction: row;
+  padding-top: 25px;
+  padding-right: 50px;
+  align-items: flex-start;
+  color: rgb(255, 255, 255);
+}
+
+.AddVehicle label {
+  display: flex;
+  width: 150px;
+  color: rgb(255, 255, 255);
+}
+
+.AddVehicle input {
+  margin-bottom: 25px;
+  color: rgb(38, 37, 37);
+}
+
+/* CSS for placing Name, Id, and Time side by side */
+.AddVehicle .input-container1 {
+  display: flex;
+  margin-left:50px;
+  margin-right: 20px;
+  margin-top: 100px;
+  flex-direction: row;
+  gap: 120px;
+
+}
+
+/* Add green color for the scenario */
+.AddVehicle button {
+  background-color: green;
+  color: rgb(253, 254, 255);
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  margin-left: -400px;
+  margin-top: 350px;
+  display: block;
+}
+
+.AddVehicle button:hover {
+  background-color: darkgreen;
+}
+
+/* Additional CSS to place elements side by side */
+.AddVehicle .input-container2 {
+  display: flex;
+  margin-left:-745px;
+  margin-right: 20px;
+  margin-top: 200px;
+  flex-direction: row;
+  gap: 100px;
+
 }

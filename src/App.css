@@ -137,6 +137,16 @@ div > button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+.vehicle-circle {
+  position: absolute;
+  display: flex;
+  width: 20px; /* Adjust the width of the sphere */
+  height: 20px; /* Adjust the height of the sphere */
+  background-color: #007bff; /* Adjust the background color */
+  border-radius: 50%;
+  transform-origin: translate(-50% , -50%);
+  transition: top 0.2s; /* Add a smooth transition effect */
+}
 
 
 

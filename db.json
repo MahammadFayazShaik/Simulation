@@ -1,12 +1,12 @@
 {
   "scenarios": [
     {
-      "name": "RVJ",
+      "name": "RVJCDS",
       "id": "789",
       "time": "2s"
     },
     {
-      "name": "Mahammad Fayaz Shaik",
+      "name": "rsrtdtydft7",
       "id": "8888777",
       "time": "5s"
     }
@@ -31,6 +31,14 @@
       },
       "positionY": 1,
       "positionX": 1
+    },
+    {
+      "id": 2,
+      "name": "!@#",
+      "initialPositionX": 4,
+      "initialPositionY": -6,
+      "speed": 1,
+      "direction": "Backwards"
     }
   ]
 }

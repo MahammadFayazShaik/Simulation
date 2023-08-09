@@ -393,19 +393,18 @@ const Home = ({ scenarios }) => {
             position: 'relative',
             width: containerSize,
             height: chartHeight,
-            borderTop: '1px solid #000',
-            overflow: 'hidden', // Hide vehicles when they go outside the container
+            borderTop: '1px solid #fff9f9',
+            overflow: 'visible', // Hide vehicles when they go outside the container
           }}
         >
           {vehicles.map((vehicle) => (
             <div
               key={vehicle.id}
+              className="vehicle-circle"
               style={{
                 position: 'absolute',
-                top: vehicle.positionY * gridSize,
-                left: vehicle.positionX * gridSize,
-                width: gridSize,
-                height: gridSize,
+                top: vehicle.positionY * gridSize+gridSize/2,
+                left: vehicle.positionX * gridSize+gridSize/2,
                 backgroundColor: vehicle.color,
                 borderRadius: '50%',
               }}

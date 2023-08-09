@@ -75,7 +75,6 @@ const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
     handleUpdateScenario(editingScenario);
 
     // Update the scenario on the Home page as well
-    onUpdateScenario(editingScenario);
   };
 
   return (

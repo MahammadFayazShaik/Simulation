@@ -51,7 +51,7 @@ const AddVehicle = () => {
         scenarioId: selectedScenario,
       }));
 
-      await axios.post('http://localhost:5000/vehicles', newVehicle);
+      await axios.post('http://localhost:5000/vehicles', {...newVehicle, scenarioId: selectedScenario});
       setNewVehicle({
         id: '',
         name: '',

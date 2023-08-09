@@ -10,6 +10,7 @@ const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
 
   useEffect(() => {
     fetchScenarios();
+    fetchVehicles();
   }, []);
 
   const fetchScenarios = async () => {
@@ -18,6 +19,15 @@ const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
       setScenarios(response.data);
     } catch (error) {
       console.error('Error fetching scenarios:', error);
+    }
+  };
+
+  const fetchVehicles = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/vehicles');
+      setVehicles(response.data);
+    } catch (error) {
+      console.error('Error fetching vehicles:', error);
     }
   };
 
@@ -76,6 +86,7 @@ const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
 
     // Update the scenario on the Home page as well
   };
+  
 
   return (
     <div className="AllScenario">
@@ -100,60 +111,59 @@ const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
           </tr>
         </thead>
         <tbody>
-          {scenarios.map((scenario) => (
-            <tr key={scenario.id}>
-              <td>
-                {editingScenario && editingScenario.id === scenario.id ? (
-                  <input
-                    type="text"
-                    value={editingScenario.id}
-                    onChange={(e) => handleEditChanges('id', e.target.value)}
-                  />
-                ) : (
-                  scenario.id
-                )}
-              </td>
-              <td>
-                {editingScenario && editingScenario.id === scenario.id ? (
-                  <input
-                    type="text"
-                    value={editingScenario.name}
-                    onChange={(e) => handleEditChanges('name', e.target.value)}
-                  />
-                ) : (
-                  scenario.name
-                )}
-              </td>
-              <td>{scenario.time}</td>
-              <td>{scenario.numberOfVehicles}</td>
-              <td>
-                <button
-                  className="add-vehicles"
-                  onClick={() => (window.location.href = '/add-vehicle')}
-                >
-                  +
-                </button>
-              </td>
-              <td>
-                {editingScenario && editingScenario.id === scenario.id ? (
-                  <>
-                    <button onClick={handleSaveChanges}>Save</button>
-                    <button onClick={handleCancelEdit}>Cancel</button>
-                  </>
-                ) : (
-                  <button onClick={() => handleEditScenario(scenario)}>✎</button>
-                )}
-              </td>
-              <td>
-                <button
-                  className="delete"
-                  onClick={() => handleDeleteScenario(scenario.id)}
-                >
-                  🗑️
-                </button>
-              </td>
-            </tr>
-          ))}
+          {scenarios.map((scenario) => {
+            const matchingVehicles = vehicles.filter(vehicle => vehicle.scenarioId === scenario.id);
+            const vehicleCount = matchingVehicles.length;
+
+            return (
+              <tr key={scenario.id}>
+                <td>
+                  {editingScenario && editingScenario.id === scenario.id ? (
+                    <input
+                      type="text"
+                      value={editingScenario.id}
+                      onChange={(e) => handleEditChanges('id', e.target.value)}
+                    />
+                  ) : (
+                    scenario.id
+                  )}
+                </td>
+                <td>
+                  {editingScenario && editingScenario.id === scenario.id ? (
+                    <input
+                      type="text"
+                      value={editingScenario.name}
+                      onChange={(e) => handleEditChanges('name', e.target.value)}
+                    />
+                  ) : (
+                    scenario.name
+                  )}
+                </td>
+                <td>{scenario.time}</td>
+                <td>{vehicleCount}</td>
+                <td>
+                  <button className="add-vehicles" onClick={() => (window.location.href = '/add-vehicle')}>
+                    +
+                  </button>
+                </td>
+                <td>
+                  {editingScenario && editingScenario.id === scenario.id ? (
+                    <>
+                      <button onClick={handleSaveChanges}>Save</button>
+                      <button onClick={handleCancelEdit}>Cancel</button>
+                    </>
+                  ) : (
+                    <button onClick={() => handleEditScenario(scenario)}>✎</button>
+                  )}
+                </td>
+                <td>
+                  <button className="delete" onClick={() => handleDeleteScenario(scenario.id)}>
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

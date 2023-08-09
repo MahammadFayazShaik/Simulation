@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { Chart } from 'chart.js';
 import '../App.css';
 
-const containerSize = 800;
-const gridSize = 75;
-const chartHeight = 400;
+const containerSize = "100%";
+const gridSize = '20px'; // Adjust the size according to your preference
+
+const chartHeight = "100%";
 
 const Home = ({ scenarios }) => {
   const navigate = useNavigate();
@@ -385,33 +386,39 @@ const Home = ({ scenarios }) => {
           </table>
         </div>
       )}
-
-      <div className="container-box" style={{ width: containerSize, height: chartHeight }}>
-        <canvas id="vehicleChart" width={containerSize} height={chartHeight}></canvas>
+<div className="grid-container">
+  {/* <canvas id="vehicleChart" width="100%" height="100%"></canvas> */}
+  <div className="grid">
+    {Array.from({ length: 15 }, (_, x) =>
+      Array.from({ length: 6 }, (_ , y) => (
         <div
+          key={`${x},${y}`}
+          className="grid-cell"
           style={{
-            position: 'relative',
-            width: containerSize,
-            height: chartHeight,
-            borderTop: '1px solid #fff9f9',
-            overflow: 'visible', // Hide vehicles when they go outside the container
+            backgroundColor: '#232020',
+            border: '1px solid #39ef82', // Add a border for better visibility
           }}
         >
-          {vehicles.map((vehicle) => (
-            <div
-              key={vehicle.id}
-              className="vehicle-circle"
-              style={{
-                position: 'absolute',
-                top: vehicle.positionY * gridSize+gridSize/2,
-                left: vehicle.positionX * gridSize+gridSize/2,
-                backgroundColor: vehicle.color,
-                borderRadius: '50%',
-              }}
-            />
-          ))}
+          {vehicles
+            .filter(vehicle => vehicle.positionX === x && vehicle.positionY === y)
+            .map(vehicle => (
+              <div
+                key={vehicle.id}
+                className="vehicle-circle"
+                style={{
+                  backgroundColor: vehicle.color,
+                }}
+              >
+                {vehicle.id}
+              </div>
+            ))}
         </div>
-      </div>
+      ))
+    )}
+  </div>
+</div>
+
+
     </div>
   );
 };

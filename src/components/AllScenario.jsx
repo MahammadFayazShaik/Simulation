@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
-import AddVehicle from './AddVehicle';
-import Home from './Home';
 
-const AllScenario = ({ onAddScenario }) => {
+const AllScenario = ({ onAddScenario, onUpdateScenario }) => {
   const [scenarios, setScenarios] = useState([]);
-  const [vehicles , setVehicles] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
+  const [editingScenario, setEditingScenario] = useState(null); // State to track the scenario being edited
 
   useEffect(() => {
     fetchScenarios();
@@ -22,6 +21,34 @@ const AllScenario = ({ onAddScenario }) => {
     }
   };
 
+  const handleEditScenario = (scenario) => {
+    // Open the edit scenario form with the selected scenario details
+    setEditingScenario(scenario);
+  };
+
+  const handleUpdateScenario = (updatedScenario) => {
+    // Perform any validation checks and update the scenario on the server
+    axios
+      .put(`http://localhost:5000/scenarios/${updatedScenario.id}`, updatedScenario)
+      .then((response) => {
+        // Update the scenario locally in the state
+        setScenarios((prevScenarios) =>
+          prevScenarios.map((scenario) =>
+            scenario.id === updatedScenario.id ? updatedScenario : scenario
+          )
+        );
+        setEditingScenario(null); // Close the edit scenario form
+      })
+      .catch((error) => {
+        console.error('Error updating scenario:', error);
+        // Show an error message to the user if necessary
+      });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingScenario(null); // Close the edit scenario form without saving changes
+  };
+
   const handleDeleteScenario = (scenarioId) => {
     axios
       .delete(`http://localhost:5000/scenarios/${scenarioId}`)
@@ -34,15 +61,29 @@ const AllScenario = ({ onAddScenario }) => {
         console.error('Error deleting scenario:', error);
       });
   };
-
   
+
+  const handleEditChanges = (key, value) => {
+    setEditingScenario((prevScenario) => ({
+      ...prevScenario,
+      [key]: value,
+    }));
+  };
+
+  const handleSaveChanges = () => {
+    // Perform any validation checks and update the scenario on the server
+    handleUpdateScenario(editingScenario);
+
+    // Update the scenario on the Home page as well
+    onUpdateScenario(editingScenario);
+  };
 
   return (
     <div className="AllScenario">
       <h2>All Scenarios</h2>
       <div className="button-container">
         {/* Add Scenario, Add Vehicle, and Delete All buttons */}
-        <button onClick={onAddScenario}>Add Scenario</button>
+        <button onClick={() => (window.location.href = '/add-scenario')}>Add Scenario</button>
         <button onClick={() => (window.location.href = '/add-vehicle')}>Add Vehicle</button>
         <button onClick={() => setScenarios([])}>Delete All</button>
       </div>
@@ -62,8 +103,28 @@ const AllScenario = ({ onAddScenario }) => {
         <tbody>
           {scenarios.map((scenario) => (
             <tr key={scenario.id}>
-              <td>{scenario.id}</td>
-              <td>{scenario.name}</td>
+              <td>
+                {editingScenario && editingScenario.id === scenario.id ? (
+                  <input
+                    type="text"
+                    value={editingScenario.id}
+                    onChange={(e) => handleEditChanges('id', e.target.value)}
+                  />
+                ) : (
+                  scenario.id
+                )}
+              </td>
+              <td>
+                {editingScenario && editingScenario.id === scenario.id ? (
+                  <input
+                    type="text"
+                    value={editingScenario.name}
+                    onChange={(e) => handleEditChanges('name', e.target.value)}
+                  />
+                ) : (
+                  scenario.name
+                )}
+              </td>
               <td>{scenario.time}</td>
               <td>{scenario.numberOfVehicles}</td>
               <td>
@@ -75,12 +136,14 @@ const AllScenario = ({ onAddScenario }) => {
                 </button>
               </td>
               <td>
-                <button
-                  className="edit"
-                  onClick={() => (window.location.href = '/edit-scenario')}
-                >
-                  ✎
-                </button>
+                {editingScenario && editingScenario.id === scenario.id ? (
+                  <>
+                    <button onClick={handleSaveChanges}>Save</button>
+                    <button onClick={handleCancelEdit}>Cancel</button>
+                  </>
+                ) : (
+                  <button onClick={() => handleEditScenario(scenario)}>✎</button>
+                )}
               </td>
               <td>
                 <button

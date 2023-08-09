@@ -79,76 +79,77 @@ const AddVehicle = () => {
 
   return (
     <div className='AddVehicle'>
-    
       <h1>Add Vehicle</h1>
-      <div className='input-container1'>
-        <div>
-        <label>Select Scenario:</label>
-        <select value={selectedScenario} onChange={(e) => setSelectedScenario(e.target.value)}>
-          <option value="">-- Select Scenario --</option>
-          {scenarios.map((scenario) => (
-            <option key={scenario.id} value={scenario.id}>
-              {scenario.name}
-            </option>
-          ))}
-        </select>
+      <div className='rectangle-box'>
+        <div className='input-row'>
+          <div>
+            <label>Select Scenario:</label>
+            <select
+              value={selectedScenario}
+              onChange={(e) => setSelectedScenario(e.target.value)}
+            >
+              <option value=''>-- Select Scenario --</option>
+              {scenarios.map((scenario) => (
+                <option key={scenario.id} value={scenario.id}>
+                  {scenario.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label>Vehicle Name:</label>
+            <input
+              type='text'
+              value={newVehicle.name}
+              onChange={(e) => setNewVehicle({ ...newVehicle, name: e.target.value })}
+            />
+          </div>
+          <div>
+            <label>Speed:</label>
+            <input
+              type='number'
+              value={newVehicle.speed}
+              onChange={(e) => setNewVehicle({ ...newVehicle, speed: parseInt(e.target.value) })}
+            />
+          </div>
+        </div>
+        <div className='input-row'>
+          <div>
+            <label>Initial Position X:</label>
+            <input
+              type='number'
+              value={newVehicle.initialPositionX}
+              onChange={(e) =>
+                setNewVehicle({ ...newVehicle, initialPositionX: parseInt(e.target.value) })
+              }
+            />
+          </div>
+          <div>
+            <label>Initial Position Y:</label>
+            <input
+              type='number'
+              value={newVehicle.initialPositionY}
+              onChange={(e) =>
+                setNewVehicle({ ...newVehicle, initialPositionY: parseInt(e.target.value) })
+              }
+            />
+          </div>
+          <div>
+            <label>Direction:</label>
+            <select
+              value={newVehicle.direction}
+              onChange={(e) => setNewVehicle({ ...newVehicle, direction: e.target.value })}
+            >
+              <option value=''>-- Select Direction --</option>
+              <option value='Towards'>Towards</option>
+              <option value='Backwards'>Backwards</option>
+              <option value='Upwards'>Upwards</option>
+              <option value='Downwards'>Downwards</option>
+            </select>
+          </div>
+        </div>
       </div>
-     
-      <div>
-        <label>Vehicle Name:</label>
-        <input
-          type="text"
-          value={newVehicle.name}
-          onChange={(e) => setNewVehicle({ ...newVehicle, name: e.target.value })}
-        />
-      </div>
-      <div>
-          <label>Speed:</label>
-          <input
-            type="number"
-            value={newVehicle.speed}
-            onChange={(e) => setNewVehicle({ ...newVehicle, speed: parseInt(e.target.value) })}
-          />
-        </div>
-        </div>
-      <div className="input-container2">
-        <div>
-          <label>Initial Position X:</label>
-          <input
-            type="number"
-            value={newVehicle.initialPositionX}
-            onChange={(e) =>
-              setNewVehicle({ ...newVehicle, initialPositionX: parseInt(e.target.value) })
-            }
-          />
-        </div>
-        <div>
-          <label>Initial Position Y:</label>
-          <input
-            type="number"
-            value={newVehicle.initialPositionY}
-            onChange={(e) =>
-              setNewVehicle({ ...newVehicle, initialPositionY: parseInt(e.target.value) })
-            }
-          />
-        </div>
-        
-        <div>
-          <label>Direction:</label>
-          <select
-            value={newVehicle.direction}
-            onChange={(e) => setNewVehicle({ ...newVehicle, direction: e.target.value })}
-          >
-            <option value="">-- Select Direction --</option>
-            <option value="Towards">Towards</option>
-            <option value="Backwards">Backwards</option>
-            <option value="Upwards">Upwards</option>
-            <option value="Downwards">Downwards</option>
-          </select>
-        </div>
-      </div>
-
-      <button className="add-button" onClick={addVehicle}>
+      <button className='add-button' onClick={addVehicle}>
         Add Vehicle
       </button>
     </div>

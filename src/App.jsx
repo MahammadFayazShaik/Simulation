@@ -10,6 +10,8 @@ import AddVehicle from './components/AddVehicle';
 
 const App = () => {
   const [scenarios, setScenarios] = useState([]);
+  const [updatedVehicle, setUpdatedVehicle] = useState(null);
+
 
   useEffect(() => {
     fetchScenarios();
@@ -28,15 +30,24 @@ const App = () => {
       console.error('Error fetching scenarios:', error);
     }
   };
+  const handleUpdateVehicle = (updatedVehicle) => {
+    // Logic to handle the updated vehicle data, for example, update it in the state
+    setUpdatedVehicle(updatedVehicle);
+  };
 
   return (
     <Router>
       <div className="app-container">
         <Navbar />
         <Routes>
-          <Route path="/add-scenarios" element={<AddScenario />} />
+          <Route path="/add-scenario" element={<AddScenario />} />
           <Route path="/all-scenarios" element={<AllScenario />} />
           <Route path="/add-vehicle" element={<AddVehicle />} />
+          <Route
+          exact
+          path="/"
+          render={() => <Home onUpdateVehicle={handleUpdateVehicle} scenarios={[] /* Add scenarios data here */} />}
+        />
 
 
 

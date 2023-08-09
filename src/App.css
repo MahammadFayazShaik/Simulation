@@ -3,8 +3,12 @@ body {
   position: fixed;
   margin: 0;
   padding: 0;
+  color: white;
   background-color: #2a2d2e; /* Set the background color for the entire screen */
 }
+ 
+
+
 
 .app-container {
   display: flex;
@@ -38,126 +42,186 @@ body {
   padding: 20px;
 }
 
-
-
-
-.graph-container {
-  position: fixed;
-  border: 1px solid #e8e2e2;
-  background-color: #d7d1d1;
+.App {
+  text-align: center;
 }
 
-.vehicle {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+h1 {
+  margin-bottom: 20px;
 }
 
-.hidden {
-  display: none;
+.vehicle-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
 }
 
-/* Additional styles for better visualization */
-.vehicle.Towards {
-  background-color: green;
+.vehicle-table th,
+.vehicle-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 
-.vehicle.Backwards {
-  background-color: red;
+.vehicle-table th {
+  background-color: #f2f2f2;
 }
 
-.vehicle.Upwards {
-  background-color: blue;
-}
-
-.vehicle.Downwards {
-  background-color: yellow;
-}
-
-
-
-
-
-
-.box {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-}
-
-.vehicle {
+/* App.css */
+.container-box {
   position: relative;
-  width: 30px;
-  height: 30px;
-  background-color: #007bff;
-  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.vehicle-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.vehicle-table th,
+.vehicle-table td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.vehicle-table th {
+  background-color: #f2f2f2;
+}
+
+.vehicle-table input,
+.vehicle-table select,
+.vehicle-table button {
+  margin: 0;
+  padding: 4px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+.vehicle-table button {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.vehicle-table input[type='number'] {
+  width: 60px;
+}
+
+.vehicle-table input[type='text'] {
+  width: 150px;
+}
+
+.vehicle-table select {
+  width: 100px;
+}
+
+/* Additional styles for the canvas and container */
+canvas {
+  border: 1px solid #1c1818;
+}
+
+.container-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ddd;
+}
+
+/* Additional styles for the buttons */
+div > button {
+  margin-right: 8px;
+}
+
+div > button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 
 
 
-
-
-/* CSS for AddScenario component */
+/* AddScenario.css */
 .AddScenario {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-}
-
-.AddScenario h2 {
-  margin-bottom: 25px;
-  color: #ccc;
-}
-
-.AddScenario label {
-  display: inline-block;
-  width: 80px;
-  margin-left: 10px;
-  color: white;
-}
-
-.AddScenario input {
-  margin-bottom: 35px;
   align-items: center;
-  color: rgb(38, 37, 37);
+  margin-top: 20px;
+  margin-left: 30px;
 }
 
-/* CSS for placing Name, Id, and Time side by side */
-.AddScenario .input-container {
+h1 {
+  margin-bottom: 20px;
+}
+
+.rectangle-box123 {
   display: flex;
-  align-items: center;
-  margin-left: 25px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 1000px; /* Set the width to fit almost to the screen */
+  max-width: 1200px; /* Set a max-width to limit the box size */
+  background-color: cadetblue;
 }
 
-/* Add green color for the scenario */
-.AddScenario button {
-  background-color: green;
-  color: white;
-  padding: 8px 12px;
+.input-row123 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.input-row123 > div {
+  flex: 0 0 30%; /* Adjust the column width as needed */
+  margin-bottom: 10px;
+}
+
+.input-row123 > div label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-row123 > div input,
+.input-row123 > div select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
-  margin-left: 425px;
-  
-
 }
 
-.AddScenario button:hover {
-  background-color: darkgreen;
-  align-items: center;
+.popup {
+  position: absolute;
+  top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  width: 250px;
 }
 
-/* Additional CSS to place elements side by side */
-.AddScenario .input-container > div {
-  margin-right: 25px;
+.error-popup {
+  background-color: #ff3333;
 }
+
+.success-popup {
+  background-color: #00cc66;
+}
+
+
 
 
 /* allScenario.css */
@@ -246,61 +310,61 @@ body {
 
 /* AddVehicle.css */
 
-/* Reset default margin and padding for all elements */
 .AddVehicle {
   display: flex;
-  flex-direction: row;
-  padding-top: 25px;
-  padding-right: 50px;
-  align-items: flex-start;
-  color: rgb(255, 255, 255);
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
-.AddVehicle label {
+h1 {
+  margin-bottom: 20px;
+}
+
+.rectangle-box {
   display: flex;
-  width: 150px;
-  color: rgb(255, 255, 255);
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 90%; /* Set the width to fit almost to the screen */
+  max-width: 1200px; /* Set a max-width to limit the box size */
 }
 
-.AddVehicle input {
-  margin-bottom: 25px;
-  color: rgb(38, 37, 37);
-}
-
-/* CSS for placing Name, Id, and Time side by side */
-.AddVehicle .input-container1 {
+.input-row {
   display: flex;
-  margin-left:50px;
-  margin-right: 20px;
-  margin-top: 100px;
-  flex-direction: row;
-  gap: 120px;
-
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-/* Add green color for the scenario */
-.AddVehicle button {
-  background-color: green;
-  color: rgb(253, 254, 255);
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  margin-left: -400px;
-  margin-top: 350px;
+.input-row > div {
+  flex: 0 0 30%; /* Adjust the column width as needed */
+  margin-bottom: 10px;
+}
+
+.input-row > div label {
   display: block;
+  margin-bottom: 5px;
 }
 
-.AddVehicle button:hover {
-  background-color: darkgreen;
+.input-row > div input,
+.input-row > div select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-/* Additional CSS to place elements side by side */
-.AddVehicle .input-container2 {
-  display: flex;
-  margin-left:-745px;
-  margin-right: 20px;
-  margin-top: 200px;
-  flex-direction: row;
-  gap: 100px;
-
+.add-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
+

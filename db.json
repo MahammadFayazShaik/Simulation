@@ -1,88 +1,36 @@
 {
   "scenarios": [
     {
-      "name": "ABC",
-      "id": "1234",
-      "time": "25s"
+      "name": "RVJ",
+      "id": "789",
+      "time": "2s"
     },
     {
-      "name": "h",
+      "name": "Mahammad Fayaz Shaik",
       "id": "8888777",
-      "time": "7s"
+      "time": "5s"
     }
   ],
   "vehicles": [
     {
-      "id": "147",
-      "name": "Car",
-      "initialPositionX": 1,
-      "initialPositionY": 2,
-      "speed": 5,
-      "direction": "Upwards"
-    },
-    {
-      "id": "456",
-      "name": "Bus",
-      "initialPositionX": 10,
-      "initialPositionY": 5,
-      "speed": 10,
-      "direction": "Towards"
-    },
-    {
-      "id": "uR6d_1W",
-      "name": "",
+      "id": 1,
+      "name": "123",
       "initialPositionX": 0,
       "initialPositionY": 0,
-      "speed": 0,
-      "direction": ""
-    },
-    {
-      "id": "1234",
-      "name": "car",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 1,
-      "direction": "Towards"
-    },
-    {
-      "id": "S38m_Ak",
-      "name": "",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 0,
-      "direction": ""
-    },
-    {
-      "id": "adas",
-      "name": "asad",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 1,
-      "direction": "Towards"
-    },
-    {
-      "id": "AHBHJ",
-      "name": "JKHDUIH",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 1,
-      "direction": "Towards"
-    },
-    {
-      "id": "278",
-      "name": "bike",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 3,
-      "direction": "Downwards"
-    },
-    {
-      "id": "2222",
-      "name": "Scooty",
-      "initialPositionX": 0,
-      "initialPositionY": 0,
-      "speed": 1,
-      "direction": "Backwards"
+      "speed": 2,
+      "direction": "Upwards",
+      "isEditing": true,
+      "editedData": {
+        "id": 1,
+        "name": "12",
+        "initialPositionX": 0,
+        "initialPositionY": 0,
+        "speed": 2,
+        "direction": "Upwards",
+        "isEditing": false
+      },
+      "positionY": 1,
+      "positionX": 1
     }
   ]
 }

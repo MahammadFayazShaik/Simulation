@@ -7,7 +7,7 @@ const Navbar = ({ setActiveItem }) => {
     <div className="navbar" >
          <Link to="/Home" className="nav-item">
         Home
-      </Link> <Link to="/add-scenarios" className="nav-item">
+      </Link> <Link to="/add-scenario" className="nav-item">
         Add Scenarios
       </Link> <Link to="/all-scenarios" className="nav-item">
         All Scenarios

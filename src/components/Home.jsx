@@ -14,7 +14,6 @@ const Home = ({ scenarios }) => {
   const [selectedScenario, setSelectedScenario] = useState('');
   const [simulationStarted, setSimulationStarted] = useState(false);
   const [vehicles, setVehicles] = useState([]);
-  const [chart, setChart] = useState(null);
   const [simulationTimer, setSimulationTimer] = useState(null);
   const [editedData, setEditedData] = useState(null);
 
@@ -30,7 +29,7 @@ const Home = ({ scenarios }) => {
      
       checkSimulationCompletion();
     }
-  }, [simulationStarted, vehicles, chart]);
+  }, [simulationStarted, vehicles]);
 
   const fetchVehicles = async (scenarioId) => {
     try {

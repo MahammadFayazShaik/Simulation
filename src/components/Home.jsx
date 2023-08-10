@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Chart } from 'chart.js';
 import '../App.css';
 
 const containerSize = "100%";
 const gridSize = '20px'; // Adjust the size according to your preference
 
 const chartHeight = "100%";
+let grid = new Array(15).fill(0).map(()=>new Array(15).fill('0'))
 
 const Home = ({ scenarios }) => {
   const navigate = useNavigate();
@@ -25,9 +25,9 @@ const Home = ({ scenarios }) => {
   }, [selectedScenario]);
 
   useEffect(() => {
-    if (simulationStarted && chart && vehicles.length > 0) {
+    if (simulationStarted && vehicles.length > 0) {
       updateVehiclesPosition();
-      updateChart();
+     
       checkSimulationCompletion();
     }
   }, [simulationStarted, vehicles, chart]);
@@ -39,13 +39,16 @@ const Home = ({ scenarios }) => {
         response.data.map((vehicle) => ({
           ...vehicle,
           remainingTime: vehicle.timeOfSimulation,
-          color: getRandomColor(), // Assuming color is included in the server response
+          color: getRandomColor(),
+          positionX: vehicle.initialPositionX, // Set the initial positionX from the server data
+          positionY: vehicle.initialPositionY, // Set the initial positionY from the server data
         }))
       );
     } catch (error) {
       console.error('Error fetching vehicles:', error);
     }
   };
+  
 
   // Mock function to generate random colors for vehicles
   const getRandomColor = () => {
@@ -75,17 +78,17 @@ const Home = ({ scenarios }) => {
     if (vehicles.length > 0) {
       const initializedVehicles = vehicles.map((vehicle) => ({
         ...vehicle,
-        positionX: Math.floor(Math.random() * (containerSize / gridSize)),
-        positionY: Math.floor(Math.random() * (chartHeight / gridSize)),
-        direction: ['up', 'down', 'left', 'right'][Math.floor(Math.random() * 4)],
+        positionX: Math.floor(Math.random() * (grid.length)), // Adjust this line
+        positionY: Math.floor(Math.random() * (grid[0].length)), // Adjust this line
+        direction: ['towards', 'downwards', 'backwards', 'upwards'][Math.floor(Math.random() * 4)],
       }));
-
+  
       setVehicles(initializedVehicles);
-
+  
       setSimulationTimer(
         setInterval(() => {
           updateVehiclesPosition();
-          updateChart();
+  
           checkSimulationCompletion();
         }, 100)
       );
@@ -93,6 +96,7 @@ const Home = ({ scenarios }) => {
       console.log('No vehicles in the selected scenario. Please add vehicles and try again.');
     }
   };
+  
 
   const updateDirection = (vehicleId, direction) => {
     setVehicles((prevVehicles) =>
@@ -116,17 +120,17 @@ const Home = ({ scenarios }) => {
           if (vehicle.direction === 'stop') {
             remainingTime = Math.max(remainingTime - 100, 0);
           } else {
-            if (vehicle.direction === 'up') {
-              positionY = Math.max(positionY - 1, 0);
-            } else if (vehicle.direction === 'down') {
-              positionY = Math.min(positionY + 1, chartHeight / gridSize - 1);
-            } else if (vehicle.direction === 'left') {
-              positionX = Math.max(positionX - 1, 0);
-            } else if (vehicle.direction === 'right') {
-              positionX = Math.min(positionX + 1, containerSize / gridSize - 1);
+            if (vehicle.direction === 'upwards') {
+              positionY = Math.max(positionY - 1, 0); // Check for top boundary
+            } else if (vehicle.direction === 'downwards') {
+              positionY = Math.min(positionY + 1, chartHeight / gridSize - 1); // Check for bottom boundary
+            } else if (vehicle.direction === 'backwards') {
+              positionX = Math.max(positionX - 1, 0); // Check for left boundary
+            } else if (vehicle.direction === 'towardst') {
+              positionX = Math.min(positionX + 1, containerSize / gridSize - 1); // Check for right boundary
             }
 
-            remainingTime = remainingTime - 100;
+            
           }
         }
 
@@ -142,62 +146,7 @@ const Home = ({ scenarios }) => {
     }
   };
 
-  const createChart = () => {
-    const ctx = document.getElementById('vehicleChart');
-    const labels = Array.from({ length: vehicles[0].timeOfSimulation / 100 }, (_, index) => (index + 1) * 100);
-
-    const datasets = vehicles.map((vehicle) => ({
-      label: `Vehicle ${vehicle.id}`,
-      data: vehicle.positions.map((position) => position.x),
-      borderColor: vehicle.color,
-      backgroundColor: vehicle.color,
-      fill: false,
-      lineTension: 0,
-    }));
-
-    setChart(
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: datasets,
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: {
-              display: true,
-              title: {
-                display: true,
-                text: 'Time',
-              },
-            },
-            y: {
-              display: true,
-              title: {
-                display: true,
-                text: 'Position X',
-              },
-              min: -1, // Include the bottom borderline
-              max: containerSize / gridSize, // Include the bottom borderline
-            },
-          },
-        },
-      })
-    );
-  };
-
-  const updateChart = () => {
-    if (chart) {
-      chart.data.labels = Array.from({ length: vehicles[0].remainingTime / 100 }, (_, index) => (index + 1) * 100);
-      chart.data.datasets.forEach((dataset, index) => {
-        dataset.data = vehicles.map((vehicle) =>
-          dataset.label === `Vehicle ${vehicle.id}` ? vehicle.positionX : vehicle.positionY
-        );
-      });
-      chart.update();
-    }
-  };
+  
 
   const handleEditVehicle = (vehicleId) => {
     setVehicles((prevVehicles) =>
@@ -269,9 +218,9 @@ const Home = ({ scenarios }) => {
   };
 
   return (
-    <div>
+    <div className='Home-Container'>
       <h1>Home Page</h1>
-      <div>
+      <div className='button-container'>
         <select value={selectedScenario} onChange={handleScenarioChange}>
           <option value="">-- Select Scenario --</option>
           {scenarios.map((scenario) => (
@@ -357,11 +306,10 @@ const Home = ({ scenarios }) => {
                         value={vehicle.direction}
                         onChange={(e) => handleEditChanges(vehicle.id, 'direction', e.target.value)}
                       >
-                        <option value="up">Up</option>
-                        <option value="down">Down</option>
-                        <option value="left">Left</option>
-                        <option value="right">Right</option>
-                        <option value="stop">Stop</option>
+                        <option value="upwards">Upwards</option>
+                        <option value="downwards">Downwards</option>
+                        <option value="backwards">Backwards</option>
+                        <option value="towards">Towards</option>
                       </select>
                     ) : (
                       vehicle.direction
@@ -374,7 +322,7 @@ const Home = ({ scenarios }) => {
                         <button onClick={() => handleCancelEdit(vehicle.id)}>Cancel</button>
                       </>
                     ) : (
-                      <button onClick={() => handleEditVehicle(vehicle.id)}>Edit</button>
+                      <button onClick={() => handleEditVehicle(vehicle.id)}>✎</button>
                     )}
                   </td>
                   <td>
@@ -387,12 +335,12 @@ const Home = ({ scenarios }) => {
         </div>
       )}
 <div className="grid-container">
-  {/* <canvas id="vehicleChart" width="100%" height="100%"></canvas> */}
+  
   <div className="grid">
-    {Array.from({ length: 15 }, (_, x) =>
-      Array.from({ length: 6 }, (_ , y) => (
-        <div
-          key={`${x},${y}`}
+   {grid.map((x,r)=> 
+   x.map((y,c)=>(
+    <div
+          key={`${r},${c}`}
           className="grid-cell"
           style={{
             backgroundColor: '#232020',
@@ -400,7 +348,7 @@ const Home = ({ scenarios }) => {
           }}
         >
           {vehicles
-            .filter(vehicle => vehicle.positionX === x && vehicle.positionY === y)
+            .filter(vehicle => vehicle.positionX-1 === r && vehicle.positionY-1 === c)
             .map(vehicle => (
               <div
                 key={vehicle.id}
@@ -415,8 +363,13 @@ const Home = ({ scenarios }) => {
         </div>
       ))
     )}
-  </div>
-</div>
+
+   </div>
+   </div>
+        
+        
+          
+
 
 
     </div>

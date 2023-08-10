@@ -68,7 +68,7 @@ const AddScenario = () => {
       </div>
       </div>
       <div>
-        <button onClick={handleSubmitScenario}>Add Scenario</button>
+        <button className =" add-button"onClick={handleSubmitScenario}>Add Scenario</button>
       </div>
       {/* Error popup */}
       {showErrorPopup && (

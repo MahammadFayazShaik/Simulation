@@ -1,38 +1,38 @@
 {
   "scenarios": [
     {
-      "name": "RVJCDS",
-      "id": "789",
+      "name": "ABc",
+      "id": "2",
       "time": "2s"
     }
   ],
   "vehicles": [
     {
-      "id": 1,
-      "name": "Car",
+      "id": 5,
+      "name": "CAR",
       "initialPositionX": 1,
-      "initialPositionY": 5,
+      "initialPositionY": 1,
       "speed": 1,
       "direction": "Towards",
-      "scenarioId": "789"
+      "scenarioId": "2"
     },
     {
-      "id": 2,
-      "name": "Bus",
-      "initialPositionX": 2,
-      "initialPositionY": 5,
+      "id": 7,
+      "name": "BUS",
+      "initialPositionX": 4,
+      "initialPositionY": 1,
       "speed": 2,
       "direction": "Backwards",
-      "scenarioId": "789"
+      "scenarioId": "2"
     },
     {
-      "id": 3,
-      "name": "CITY BUS",
+      "id": 8,
+      "name": "LORRY",
       "initialPositionX": 1,
-      "initialPositionY": 2,
-      "speed": 2,
+      "initialPositionY": 1,
+      "speed": 1,
       "direction": "Backwards",
-      "scenarioId": "789"
+      "scenarioId": "2"
     }
   ]
 }

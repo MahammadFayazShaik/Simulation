@@ -7,6 +7,10 @@ const AddVehicle = () => {
   const [vehicles, setVehicles] = useState([]);
   const [scenarios, setScenarios] = useState([]);
   const [selectedScenario, setSelectedScenario] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
+
+
   const [newVehicle, setNewVehicle] = useState({
     id: '',
     name: '',
@@ -41,17 +45,17 @@ const AddVehicle = () => {
 
   const addVehicle = async () => {
     try {
-      if (!selectedScenario) {
-        alert('Please select a scenario.');
+      if (!selectedScenario || !newVehicle.name || !newVehicle.speed || !newVehicle.initialPositionX || !newVehicle.initialPositionY || !newVehicle.direction) {
+        setShowErrorPopup('Please fill in all fields.');
         return;
       }
-
+  
       setNewVehicle((prev) => ({
         ...prev,
         scenarioId: selectedScenario,
       }));
-
-      await axios.post('http://localhost:5000/vehicles', {...newVehicle, scenarioId: selectedScenario});
+  
+      await axios.post('http://localhost:5000/vehicles', { ...newVehicle, scenarioId: selectedScenario });
       setNewVehicle({
         id: '',
         name: '',
@@ -60,7 +64,7 @@ const AddVehicle = () => {
         speed: 0,
         direction: '',
       });
-
+  
       // Update the number of vehicles for the selected scenario
       const updatedScenarios = scenarios.map((scenario) => {
         if (scenario.id === selectedScenario) {
@@ -72,11 +76,23 @@ const AddVehicle = () => {
         return scenario;
       });
       setScenarios(updatedScenarios);
+  
+      // Show success message
+      setShowSuccessMessage(true);
+  
+      // Hide the success message after a few seconds
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000); // Change the duration as needed
+  
+      // Clear error message
+      setShowErrorPopup('');
     } catch (error) {
       console.error('Error adding vehicle:', error);
+      setShowErrorPopup('An error occurred while adding the vehicle.');
     }
   };
-
+  
   return (
     <div className='AddVehicle'>
       <h1>Add Vehicle</h1>
@@ -152,6 +168,18 @@ const AddVehicle = () => {
       <button className='add-button' onClick={addVehicle}>
         Add Vehicle
       </button>
+      {showErrorPopup && (
+        <div className="popup error-popup">
+          All fields are required to fill.
+        </div>
+      )}
+       
+       
+      {showSuccessMessage && (
+        <div className="popup success-popup">
+          Scenario added successfully!
+        </div>
+      )}
     </div>
   );
 };
